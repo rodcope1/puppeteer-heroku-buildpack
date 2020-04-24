@@ -12,6 +12,11 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+if [ -n "$BUILDPACK_CLEAR_CACHE" ]; then
+  echo "-----> Clearing cache dir."
+  rm -rf "$CACHE_DIR/*"
+fi
+
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 function error() {
@@ -74,6 +79,14 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
+
+#
+# Clear cache after build is done
+#
+if [ -n "$BUILDPACK_CLEAR_CACHE" ]; then
+  echo "-----> Clearing cache dir."
+  rm -rf "$CACHE_DIR/*"
+fi
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
