@@ -12,10 +12,8 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-if [ -n "$BUILDPACK_CLEAR_CACHE" ]; then
-  echo "-----> Clearing cache dir."
-  rm -rf "$CACHE_DIR/*"
-fi
+echo "-----> Clearing cache dir."
+rm -rf "$CACHE_DIR/*"
 
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
@@ -83,10 +81,8 @@ done
 #
 # Clear cache after build is done
 #
-if [ -n "$BUILDPACK_CLEAR_CACHE" ]; then
-  echo "-----> Clearing cache dir."
-  rm -rf "$CACHE_DIR/*"
-fi
+echo "-----> Clearing cache dir."
+rm -rf "$CACHE_DIR/*"
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
